@@ -3,7 +3,7 @@
 \alias{arab}
 \title{Arabidopsis RNA-Seq Data Set}
 \description{
-  A pilot RNA-Seq data for studying the defense response of
+  An RNA-Seq dataset from a pilot study of the defense response of
   Arabidopsis to infection by bacteria. We performed RNA-Seq
   experiments on three independent biological samples from each of
   the two treatment groups.  The matrix contains the frequencies of
@@ -30,8 +30,8 @@
 \usage{data(arab)}
 \format{A 26222 by 6 matrix of RNA-Seq read frequencies.}
 \references{
-  Di, Y, D. W. Schafer, J. S. Cumbie, and J. H. Chang: "The NBP Negative Binomial Model
-  for Assessing Differential Gene Expression from RNA-Seq", SAGMB,
-  accepted.
+Di Y, Schafer DW, Cumbie JS, and Chang JH (2011): "The NBP Negative Binomial
+Model for Assessing Differential Gene Expression from RNA-Seq", Statistical
+Applications in Genetics and Molecular Biology, 10 (1). 
 }
 \keyword{datasets}

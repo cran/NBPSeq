@@ -8,7 +8,8 @@
 exact NB test on each gene to assess differential gene expression between two groups.
 }
 \usage{
-  nbp.test(counts, grp.ids, grp1, grp2, norm.factors, method.disp = "NBP", print.level, ...)
+  nbp.test(counts, grp.ids, grp1, grp2, norm.factors, method.disp = "NBP", 
+      print.level, ...)
 }
 \arguments{
   \item{counts}{
@@ -158,9 +159,9 @@ Yanming Di <diy@stat.oregonstate.edu>, Daniel W Schafer <schafer@stat.oregonstat
 \note{
   Due to thinning (random downsampling of counts), two identical calls
   to \code{nbp.test} may yield slightly different results. A random
-  number seed can be used to make the results reproducible.  We are
-  working on tests based on higher-order asymptotics (HOA) that do not
-  require thinning.
+  number seed can be used to make the results reproducible.  
+  The regression analysis method implemented in \code{\link{nb.glm.test}} does
+not require thinning and can also be used to compare expression in two groups.
 
   Advanced users can call \code{prepare.nbp}, \code{estimate.disp},
   \code{exact.nb.test} directly to have more control over modeling

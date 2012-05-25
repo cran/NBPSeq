@@ -8,7 +8,8 @@ Create the NBP data structure, (optionally) normalize the counts, and
 thin the counts to make the effective library sizes equal.
 }
 \usage{
-prepare.nbp(counts, grp.ids, lib.sizes = colSums(counts), norm.factors = NULL, thinning = TRUE, print.level = 1)
+prepare.nbp(counts, grp.ids, lib.sizes = colSums(counts), norm.factors = NULL, 
+    thinning = TRUE, print.level = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

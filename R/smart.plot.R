@@ -130,8 +130,8 @@ example.smart.filter = function() {
   plot(x, y, col=rgb(0, 0, 1, 0.1), pch=19);
   smart.plot(x, y, resolution=100, pch=19);
   smart.plot(x, y, pch=19);
-  smart.plot(x, y, res = 100, pch="+");
-  smart.plot(x, y, res = 100, pch="+", col=1);
+  smart.plot(x, y, resolution = 100, pch="+");
+  smart.plot(x, y, resolution = 100, pch="+", col=1);
 
   smart.plot(x, y, resolution=100, clip=5, pch=19);
   smart.plot(x, y, resolution= 100, pch=19, log="xy");

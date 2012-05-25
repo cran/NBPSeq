@@ -144,9 +144,20 @@ print.nbp.test = function(obj, subset=1:10) {
   invisible();
 }
 
+
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title Print nbp object
+##' @param x 
+##' @param subset 
+##' @param ... 
+##' @return  NULL
+##' @author Yanming Di
 print.nbp = function(x, subset=1:10, ...) {
   obj=x;
   print.nbp.counts(obj, subset);
   print.nbp.pars(obj, subset);
   print.nbp.test(obj, subset);
+  invisible();
 }

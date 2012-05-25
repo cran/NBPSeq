@@ -34,35 +34,6 @@ thin.counts = function(y, current.lib.sizes = colSums(y),
   list(counts =y.thinned, lib.sizes = target.lib.sizes);
 }
 
-test.thin.counts = function() {
-  set.seed(1001);
-  counts = rpois(1000, rexp(1000));
-  dim(counts) = c(200,5);
-  lib.sizes = colSums(counts);
-
-  ## Thin the counts
-  obj = thin.counts(counts);
-  obj$lib.sizes;
-  colSums(obj$counts);
-
-  for (k in 1:5) {
-    print(cor(counts[,k]/lib.sizes[k], obj$counts[,k]/obj$lib.sizes[k]));
-  }
-  
-  ## Thin the counts
-  obj = thin.counts(counts, target.lib.size = 100);
-  obj$lib.sizes;
-  colSums(obj$counts);
-
-  for (k in 1:5) {
-    print(cor(counts[,k]/lib.sizes[k], obj$counts[,k]/obj$lib.sizes[k]));
-  }
-
-  mean(obj$counts / counts, na.rm=TRUE);
-  mean(100 / lib.sizes);
- 
-  ## checkEquals(y0,y1);
-}
 
 ## Create an NBP object, perform coutn normalization, and adjust for
 ## unequal library sizes.
@@ -106,6 +77,7 @@ prepare.nbp = function(counts, grp.ids, lib.sizes = colSums(counts),
     obj$pseudo.lib.sizes = rep(mean(obj$eff.lib.sizes), length(obj$eff.lib.sizes));
   }
 
+  class(obj)="nbp";
   obj
 }
 

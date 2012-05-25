@@ -11,7 +11,7 @@
   NBP model.
 }
 \usage{
- plot.nbp(x, ...);
+  \method{plot}{nbp}(x, ...);
 }
 
 \arguments{

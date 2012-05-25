@@ -28,8 +28,8 @@ estimate.disp(obj, method = "NBP", print.level = 1, ...)
 
 \value{
     The list \code{obj} from the input with the following added components:
-	\item{phi, alpha}{dispersion parameters.}
-    \item{pie}{a matrix the same size as \code{counts}, estimated mean relative frequencies.}
+	\item{phi, alpha}{parameters of the dispersion model.}
+    \item{pie}{a matrix of the same dimensions as \code{obj$counts}, estimated mean relative frequencies.}
 }
 
 \details{
@@ -66,9 +66,9 @@ estimate.disp(obj, method = "NBP", print.level = 1, ...)
 }
 
 \references{
-  Di, Y, D. W. Schafer, J. S. Cumbie, and J. H. Chang: "The NBP Negative Binomial Model
-  for Assessing Differential Gene Expression from RNA-Seq", SAGMB,
-  accepted.
+Di Y, Schafer DW, Cumbie JS, and Chang JH (2011): "The NBP Negative Binomial
+Model for Assessing Differential Gene Expression from RNA-Seq", Statistical
+Applications in Genetics and Molecular Biology, 10 (1).
 }
 \author{
 Yanming Di <diy@stat.oregonstate.edu>, Daniel W Schafer <schafer@stat.oregonstate.edu>

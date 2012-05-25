@@ -8,7 +8,7 @@ Print contents of an NBP object, output from \code{\link{prepare.nbp}},
 \code{\link{estimate.disp}}, or \code{\link{nbp.test}}.  
 }
 \usage{
-print.nbp(x, subset = 1:10, ...)
+\method{print}{nbp}(x, subset = 1:10, ...)
 }
 \arguments{
   \item{x}{
