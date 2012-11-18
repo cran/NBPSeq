@@ -1,7 +1,7 @@
 Package: NBPSeq
 Type: Package
-Version: 0.1.6
-Date: 05-25-2012
+Version: 0.1.8
+Date: 11-18-2012
 Title: Negative Binomial Models for RNA-Sequencing Data
 Author: Yanming Di <diy@stat.oregonstate.edu>, Daniel W Schafer
         <schafer@stat.oregonstate.edu>, with contributions from Jason S
@@ -13,6 +13,6 @@ Description: Negative Binomial (NB) models for two-group comparisons
 Depends: qvalue, R (>= 2.10)
 License: GPL-2
 LazyLoad: yes
-Packaged: 2012-05-25 23:36:51 UTC; yanming
+Packaged: 2012-11-18 20:59:35 UTC; yanming
 Repository: CRAN
-Date/Publication: 2012-05-26 09:55:12
+Date/Publication: 2012-11-19 07:07:14

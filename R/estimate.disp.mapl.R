@@ -3,41 +3,29 @@
 ## Likelihood (profile likelihood, conditonal likelihood, and adjusted
 ## profile likelihood) functions:
 ##
-##  pl.phi.1
-##  cl.phi.1
 ##  apl.phi.alpha.1
-## 
-##  likelihood.phi
 ##  apl.phi.alpha
 ##
 ## Genewise dispersion parameter estimators:
 ##
-##  mle.phi.1 
-##  estimate.disp.1
 ##
 ## Estimators for dispersion parameter models
 ##
-##  estimate.disp.genewise
-##  estimate.disp.pooled
-##  maximize.likelihood.disp (estimate.disp.mapl)
 ##  estimate.disp.mapl.nbp
 
-## library(numDeriv);
-## source('log.likelihood.R');
-## source('nb.glm.R');
-## source('nbp-mcle.R');
-## source('nbp-mle.R');
-## source('utils.R');
-
-##' The log adjusted profile likelihood of parameters in the dispersion model: phi = phi0 p^alpha1
-##' @title The log adjusted profile likelihood of parameters in the dispersion model
-##' @param phi a scalar of an n-vector, values of the dispersion or log dispersion
+##' The log adjusted profile likelihood of the dispersion model parameters from a single gene
+##'
+##' The dispersion model is phi=phi0 pi^alpha1, where pi denotes the mean relative frequencies
+##' 
+##' @title The log adjusted profile likelihood of the dispersion model parameters
+##' @param phi0 
+##' @param alpha1 
 ##' @param y an n-vector of NB counts
 ##' @param lib.sizes an n vector of effective library sizes
 ##' @param x a n by p design matrix
 ##' @param beta0 non NA components are hypothesized values of beta, NA components are free components
-##' @param log.dispersion logical; if TRUE phi is log dispersion
-##' @return a list the log adjusted profile likelihood of phi 
+##' @param print.level 
+##' @return a list the log adjusted profile likelihood of (phi0, alpha1)
 apl.phi.alpha.1 = function(phi0, alpha1, y, lib.sizes, x, beta0,
   print.level=0) {
 
@@ -115,7 +103,7 @@ apl.phi.alpha = function(phi0, alpha1,
 
 
 ##' Estimate the NBP model for dispersion parameters by maximizing the
-##' adjust profile likelihood. 
+##' adjusted profile likelihood. 
 ##'
 ##' Under the NBP model, the dispersion is a power function of the relative mean, 
 ##'

@@ -42,7 +42,9 @@ ma.plot = function(test.out,
   }
 
   log2.pie = log2(test.out$pooled.pie);
-  log2.fc = log2(exp(test.out$log.fc));
+  ## log.fc is base 2!
+  ## log2.fc = log2(exp(test.out$log.fc));
+  log2.fc = test.out$log.fc;
 
   ## p-value plot
   smart.plot(log2.pie, log2.fc,

@@ -1,4 +1,10 @@
-##' @title The log likelihood of a NB model
+##' The log likelihood of the NB model under the mean shape parameterization
+##'
+##' This function call dnbinom to compute the log likelihood from each data point and sum the results over all data points.
+##' kappa, mu and y should have compatible dimensions.
+##' 
+##' @title The Log Likelihood of a NB Model
+##'
 ##' @param kappa shape parameter
 ##' @param mu mean parameter
 ##' @param y a n-vector of NB counts
@@ -11,8 +17,11 @@ log.likelihood.nb= function(kappa, mu, y) {
   sum(dnbinom(y, kappa, mu=mu, log=TRUE));
 }
 
-##' The log likelihood of a NB model, non-integer counts are allowed.
-##' @title The log likelihood of a NB model
+##' The log likelihood of the NB model under the mean shape parameterization
+##'
+##' An alternative way to compute the log likelihood of a NB model. kappa, mu and y should have compatible dimensions.
+##' 
+##' @title The Log Likelihood of a NB Model
 ##' @param kappa shape parameter
 ##' @param mu mean parameter
 ##' @param y a n-vector of NB counts

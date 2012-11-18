@@ -95,7 +95,9 @@ q-value.
 
   ## Prepare an NBP object, adjust the library sizes by thinning the counts.
   set.seed(999);
-  obj = prepare.nbp(arab, grp.ids, print.level=5);
+
+  ## For demonstration purpose, only use the first 100 rows of the arab data.
+  obj = prepare.nbp(arab[1:100,], grp.ids, print.level=5);
 
   ## Estimate the NBP dispersion parameters
   obj = estimate.disp(obj, print.level=5);

@@ -1,2 +1,3 @@
-export(nbp.test, prepare.nbp, estimate.disp, exact.nb.test, print.nbp, plot.nbp, 
-nb.glm.test, estimate.norm.factors, prepare.nb.data, estimate.dispersion, test.coefficient);
+export(nbp.test, prepare.nbp, estimate.disp, exact.nb.test, print.nbp, plot.nbp, nb.glm.test, estimate.norm.factors, prepare.nb.data, estimate.dispersion, test.coefficient);
+## exportPattern("^[^\\.]")
+useDynLib(NBPSeq, Cdqrls)

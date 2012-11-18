@@ -192,8 +192,11 @@ not require thinning and can also be used to compare expression in two groups.
   ## Set random number seed to make results reproducible
   set.seed(999);
 
+  ## For demonstration purpose, we will use the first 100 rows of the arab data.
+  counts = arab[1:100,];
+
   ## Fit the NBP model and perform exact NB test for differential gene expression
-  res = nbp.test(arab, grp.ids, grp1, grp2, print.level = 5);
+  res = nbp.test(counts, grp.ids, grp1, grp2, print.level = 5);
 
   ## Show top ten most differentially expressed genes
   subset = order(res$p.values)[1:10];

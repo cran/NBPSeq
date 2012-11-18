@@ -362,6 +362,11 @@ test.coefficient = function(nb, dispersion, x, beta0,
   if (print.level>0)
     message("HOA test for regression coefficients.");
 
+  ## Index to the parameter of interest
+  idh = !is.na(beta0);
+  ## Dimension of the hypothesis
+  nh = sum(idh);
+
   ## Determine the alternative
   alternatives = c("two.sided", "less", "greater");
   alt = pmatch(alternative, c("two.sided", "less", "greater"));
@@ -399,11 +404,18 @@ test.coefficient = function(nb, dispersion, x, beta0,
   for (i in subset) {
     if (print.level>1) setTxtProgressBar(pb, i/m);
 
+    if (nh==1) {
     res.hoa = try(
       hoa.1d(counts[i,], lib.sizes, x, phi[i,], beta0,
              alternative=alternative,
              print.level=print.level-1),
       silent=TRUE); 
+  } else {
+    res.hoa = try(
+      hoa.hd(counts[i,], lib.sizes, x, phi[i,], beta0,
+             print.level=print.level-1),
+      silent=TRUE); 
+  }
 
     if (!("try-error" %in% class(res.hoa))) {
       ## print(i);
