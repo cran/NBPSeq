@@ -2,7 +2,7 @@
 ## source('nbp-mle.R');
 ## source('nb.glm.R');
 
-##' @title One-dimensional HOA test for a regression coefficient in an NB GLM model
+##' @title (private) One-dimensional HOA test for a regression coefficient in an NB GLM model
 ##' @param y an n vector of counts
 ##' @param s an n vector of effective library sizes
 ##' @param x an n by p design matrix
@@ -12,7 +12,7 @@
 ##' components
 ##' @param tol.mu convergence criteria
 ##' @param alternative "less" means phi < 0.
-##' @param print.level 
+##' @param print.level a number, print level
 ##' @return test statistics and p-values of HOA, LR, and Wald tests
 hoa.1d = function(y, s, x, phi, beta0, tol.mu=1e-3/length(y),
   alternative="two.sided",
@@ -25,7 +25,7 @@ hoa.1d = function(y, s, x, phi, beta0, tol.mu=1e-3/length(y),
   res.na =list(
     rstar=NA, pstar=NA,
     r=NA, p=NA,
-    z.wald=NA, p.wald=NA,
+    w=NA, p.wald=NA,
     u=NA, p.score=NA,
     NPadj=NA, INFadj=NA,
     alternative=alternative);
@@ -126,7 +126,7 @@ hoa.1d = function(y, s, x, phi, beta0, tol.mu=1e-3/length(y),
        beta.tilde = beta.tilde,
        mu.tilde = mu.tilde,
                 r=0, rstar=0, rstar0=0, NPadj=0, INFadj=0, p=0.5, pstar=0.5,
-                z.wald=w, p.wald=p.wald));
+                w=w, p.wald=p.wald));
   }
 
   ## Score test statistic and p-value

@@ -1,4 +1,4 @@
-##' @title HOA test for regression coefficients in an NBP GLM model
+##' @title (private) HOA test for regression coefficients in an NBP GLM model
 ##' @param y an n vector of counts
 ##' @param s an n vector of effective library sizes
 ##' @param x an n by p design matrix
@@ -7,6 +7,7 @@
 ##' components are hypothesized values of beta, NA components are free
 ##' components
 ##' @param tol.mu convergence criteria
+##' @param print.level a number, print level
 ##' @return test statistics and  p-values of HOA, LR, and Wald tests
 hoa.hd  = function(y, s, x, phi, beta0, tol.mu=1e-3/length(y),
   print.level=1) {
@@ -72,7 +73,8 @@ hoa.hd  = function(y, s, x, phi, beta0, tol.mu=1e-3/length(y),
 
   ## Wald test statistic and p-value
   w = t(beta.hat[idh] - beta0[idh]) %*% solve(solve(i.hat)[idh, idh]) %*% (beta.hat[idh] - beta0[idh]);
-  p.wald = 1 - pchisq(w, df=nh);
+  ## p.wald = 1 - pchisq(w, df=nh);
+  p.wald = pchisq(w, df=nh, lower.tail=FALSE);
   
   ## Find MLE under the hypothesis
   fit0 = irls.nb.1(y, s, x, phi, beta0);
@@ -94,11 +96,12 @@ hoa.hd  = function(y, s, x, phi, beta0, tol.mu=1e-3/length(y),
   ## Score test statistic and p-value
   i.tilde.inv = solve(i.tilde);
   u = t(D1.tilde) %*% i.tilde.inv %*% D1.tilde;
-  p.score = 1-pchisq(u, df=nh);
+  p.score = pchisq(u, df=nh, lower.tail=FALSE);
 
   ## Likelihood ratio test statistic and p-value
   lambda = 2*(l.hat - l.tilde);
-  p = 1 - pchisq(lambda, df=nh);
+  ## p = 1 - pchisq(lambda, df=nh);
+  p = pchisq(lambda, df=nh, lower.tail=FALSE);
 
   ## return(list(LRT=p, Wald=p.wald));
 
@@ -150,13 +153,14 @@ hoa.hd  = function(y, s, x, phi, beta0, tol.mu=1e-3/length(y),
   }
 
   lambda.star = lambda * ( 1 - 1/lambda * log(adj))^2;
-  pstar = 1 - pchisq(lambda.star, df=nh);
+  ## pstar = 1 - pchisq(lambda.star, df=nh);
+  pstar = pchisq(lambda.star, df=nh, lower.tail=FALSE);
   
   list(beta.hat = beta.hat,
        mu.hat = mu.hat,
        beta.tilde = beta.tilde,
        mu.tilde = mu.tilde,
-       lambda.star=lambda.star,pstar=pstar,
+       lambda.star=lambda.star, pstar=pstar,
        lambda = lambda, p=p,
        w = w, p.wald = p.wald,
        u = u, p.score = p.score

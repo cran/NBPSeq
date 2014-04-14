@@ -1,100 +1,99 @@
 \name{estimate.disp}
 \alias{estimate.disp}
-\title{
-Estimate Negative Binomial Dispersion Parameters
-}
-\description{
-Fit a NBP (or NB2) model to the RNA-Seq count data. Estimate negative binomial
-dispersion parameter(s).
-}
+\title{Fit a parametric disperison model to thinned counts}
 \usage{
-estimate.disp(obj, method = "NBP", print.level = 1, ...)
+estimate.disp(obj, model = "NBQ", print.level = 1, ...)
 }
 \arguments{
-    \item{obj}{output from \code{\link{prepare.nbp}}. 
-    }
-    \item{method}{
-	"NBP" (default) or "NB2", the model for the count variance.
-    }
-    \item{print.level}{
-	controls the amount of messages printed: 0 for
-	    suppressing all messages, 1 for basic progress messages, larger
-	    values for more detailed messages.
-    }
-    \item{\dots}{
-	additional parameters controlling the estimation of the parameters.
-    }
-}
+  \item{obj}{output from \code{\link{prepare.nbp}}.}
 
+  \item{model}{a string, one of "NBQ" (default), "NBP" or
+  "NB2".}
+
+  \item{print.level}{a number, controls the amount of
+  messages printed: 0 for suppressing all messages, 1 for
+  basic progress messages, larger values for more detailed
+  messages.}
+
+  \item{\dots}{additional parameters controlling the
+  estimation of the parameters.}
+}
 \value{
-    The list \code{obj} from the input with the following added components:
-	\item{phi, alpha}{parameters of the dispersion model.}
-    \item{pie}{a matrix of the same dimensions as \code{obj$counts}, estimated mean relative frequencies.}
+The list \code{obj} from the input with some added
+components summarizing the fitted dispersion model.  Users
+can print and plot the output to see brief summaries of the
+fitted dispersion model. The output is otherwise not
+intended for use by end users directly.
 }
-
+\description{
+Fit a parametric dispersion model to RNA-Seq counts data
+prepared by \code{\link{prepare.nbp}}. The model parameters
+are estimated from the pseudo counts: thinned/down-sampled
+counts that have the same effective library size.
+}
 \details{
-  For each individual gene \eqn{i}, a negative binomial (NB) distribution uses a
-  dispersion parameter \eqn{\phi_i} to model the extra-Poisson variation
-  between biological replicates: the NB model imposes a mean-variance
-  relationship \eqn{\sigma_i^2 = \mu_i + \phi_i \mu_i^2}.
-  Across all genes, the NBP
-  parameterization of the NB distribution (the NBP model) uses two
-  parameters \eqn{(\phi, \alpha)} to model extra-Poisson variation over
-  the entire range of expression levels. The NBP model allows the NB
-  dispersion parameter to be an arbitrary power function of the mean
-  (\eqn{\phi_i = \phi\mu_i^{2-\alpha}}). The NBP model includes the
-  Poisson model as a limiting case (as \eqn{\phi} tends to \eqn{0}) and
-  the NB2 model as a special case (when \eqn{\alpha=2}). Under the NB2
-  model, the dispersion parameter is a constant and does not vary with
-  the mean expression levels. NBP model is more flexible and is the
-  recommended default option.
-  
-  The dispersion parameters are estimated from the pseudo counts (counts
-  adjusted to have same effective library sizes).  The parameters are
-  estimated by maximizing the log conditional likelihood of \eqn{(\phi,
-  \alpha)} given the row sums. The log conditional likelihood is
-  computed for each gene in each treatment group and then summed over
-  genes and treatment groups.
-}
+For each individual gene \eqn{i}, a negative binomial (NB)
+distribution uses a dispersion parameter \eqn{\phi_i} to
+capture the extra-Poisson variation between biological
+replicates: the NB model imposes a mean-variance
+relationship \eqn{\sigma_i^2 = \mu_i + \phi_i \mu_i^2}.  In
+many RNA-Seq data sets, the dispersion parameter
+\eqn{\phi_i} tends to vary with the mean \eqn{\mu_i}. We
+proposed to capture the dispersion-mean dependence using
+parametric models.
 
+With this function, \code{estimate.disp}, users can choose
+from three parametric models: NB2, NBP and NBQ (default).
+
+Under the NB2 model, the dispersion parameter is a constant
+and does not vary with the mean expression levels.
+
+Under the NBP model, the log dispersion is modeled as a
+linear function of preliminarily estimated log mean
+relative frequencies (\code{pi.pre}):
+
+log(phi) = par[1] + par[2] * log(pi.pre/pi.offset),
+
+Under the NBQ model, the log dispersion is modeled as a
+quadratic function of preliminarily estimated log mean
+relative frequencies (\code{pi.pre}):
+
+log(phi) = par[1] + par[2] * log(pi.pre/pi.offset) + par[3]
+* (log(pi.pre/pi.offset))^2;
+
+The NBQ model is more flexible than the NBP and NB2 models,
+and is the current default option.
+
+In the NBP and NBQ models, \code{pi.offset} is fixed to be
+1e-4, so par[1] corresponds to the dispersion level when
+the relative mean frequency is 100 reads per million (RPM).
+
+The dispersion parameters are estimated from the pseudo
+counts (counts adjusted to have the same effective library
+sizes).  The parameters are estimated by maximizing the log
+conditional likelihood of the model parameters given the
+row sums. The log conditional likelihood is computed for
+each gene in each treatment group and then summed over
+genes and treatment groups.
+}
 \note{
-  Users should call \code{\link{prepare.nbp}} before calling this
-  function. The function \code{\link{prepare.nbp}} will normalize
-  the counts and adjust the counts so that the effective library sizes are
-  approximately the same (computing the conditional likelihood requires
-  the library sizes to be the same).
-}
-
-\references{
-Di Y, Schafer DW, Cumbie JS, and Chang JH (2011): "The NBP Negative Binomial
-Model for Assessing Differential Gene Expression from RNA-Seq", Statistical
-Applications in Genetics and Molecular Biology, 10 (1).
-}
-\author{
-Yanming Di <diy@stat.oregonstate.edu>, Daniel W Schafer <schafer@stat.oregonstate.edu>
-}
-
-\seealso{
-  See Also \code{\link{nbp.test}}.
+Users should call \code{\link{prepare.nbp}} before calling
+this function. The function \code{\link{prepare.nbp}} will
+normalize the counts and adjust the counts so that the
+effective library sizes are approximately the same
+(computing the conditional likelihood requires the library
+sizes to be the same).
 }
 \examples{
-
-  ## Load Arabidopsis data
-  data(arab);
-
-  ## Specify treatment groups 
-  grp.ids = c(1, 1, 1, 2, 2, 2);
-
-  ## Prepare an NBP object, adjust the library sizes by thinning the counts.
-  set.seed(999);
-
-  ## For demonstration purpose, we will use the first 100 rows of the data
-  obj = prepare.nbp(arab[1:100,], grp.ids, print.level=5);
-
-  ## Estimate the NBP dispersion parameters
-  obj = estimate.disp(obj, print.level=5);
-  
-  ## Print the NBP object
-  print.nbp(obj);
-
+## See the example for nb.exact.test
 }
+\references{
+Di Y, Schafer DW, Cumbie JS, and Chang JH (2011): "The NBP
+Negative Binomial Model for Assessing Differential Gene
+Expression from RNA-Seq", Statistical Applications in
+Genetics and Molecular Biology, 10 (1).
+}
+\seealso{
+\code{\link{nbp.test}}, \code{\link{exact.nb.test}}
+}
+

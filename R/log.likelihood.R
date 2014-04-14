@@ -3,13 +3,13 @@
 ##' This function call dnbinom to compute the log likelihood from each data point and sum the results over all data points.
 ##' kappa, mu and y should have compatible dimensions.
 ##' 
-##' @title The Log Likelihood of a NB Model
+##' @title (private) The Log Likelihood of a NB Model
 ##'
 ##' @param kappa shape parameter
 ##' @param mu mean parameter
 ##' @param y a n-vector of NB counts
 ##' @return the log likelihood of (kappa, mu)
-log.likelihood.nb= function(kappa, mu, y) {
+ll.nb= function(kappa, mu, y) {
   ## p = mu/(mu+kappa);
   ## l0= sum(log(gamma(kappa+y)) - log(gamma(kappa)) - log(gamma(1+y))
   ##       + y * log(mu) + kappa * log(kappa) - (y+kappa) * log(mu+kappa));
@@ -21,12 +21,13 @@ log.likelihood.nb= function(kappa, mu, y) {
 ##'
 ##' An alternative way to compute the log likelihood of a NB model. kappa, mu and y should have compatible dimensions.
 ##' 
-##' @title The Log Likelihood of a NB Model
+##' @title (private) The Log Likelihood of a NB Model
+##' @noRd
 ##' @param kappa shape parameter
 ##' @param mu mean parameter
 ##' @param y a n-vector of NB counts
 ##' @return the log likelihood of (kappa, mu)
-log.likelihood.nb.2= function(kappa, mu, y) {
+ll.nb.2= function(kappa, mu, y) {
   p = mu/(mu+kappa);
   eps = .Machine$double.eps^0.5;
   p = p + (p<eps)*eps;
@@ -40,21 +41,20 @@ test.log.likelihood= function() {
   y = 0:100;
 
   system.time({for (i in 1:100000) {
-   l1 = log.likelihood.nb(kappa, mu, y);
+   l1 = ll.nb(kappa, mu, y);
   }});
   
   system.time({for (i in 1:100000) {
-  l2 = log.likelihood.nb.2(kappa, mu, y);
+  l2 = ll.nb.2(kappa, mu, y);
   }});
 
+  ## It seems ll.nb is better --YD, 07/26/2013
   mu=0;
   y = 0;
   y = 1e-10;
   y = 1e-8;
   kappa = 1e-8;
-  log.likelihood.nb(kappa, mu, y);
-  log.likelihood.nb.2(kappa, mu, y);
+  ll.nb(kappa, mu, y);
+  ll.nb.2(kappa, mu, y);
 
 }
-
-
