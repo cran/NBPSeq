@@ -1,7 +1,7 @@
 Package: NBPSeq
 Type: Package
-Version: 0.3.0
-Date: 04-14-2014
+Version: 0.3.1
+Date: 2022-06-09
 Title: Negative Binomial Models for RNA-Sequencing Data
 Author: Yanming Di <diy@stat.oregonstate.edu>, Daniel W Schafer
     <schafer@stat.oregonstate.edu>, with contributions from Jason S Cumbie
@@ -13,7 +13,7 @@ Depends: R (>= 3.00)
 Imports: splines, qvalue
 License: GPL-2
 LazyLoad: yes
-Packaged: 2014-04-14 15:55:37 UTC; yanming
+Packaged: 2022-06-09 09:15:23 UTC; panos
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-04-15 00:11:10
+Date/Publication: 2022-06-09 11:02:06 UTC

@@ -27,12 +27,12 @@
 /* A wrapper to replace
 
     z <- .Fortran("dqrls",
-		  qr = x, n = n, p = p,
-		  y = y, ny = ny,
-		  tol = as.double(tol),
-		  coefficients = mat.or.vec(p, ny),
-		  residuals = y, effects = y, rank = integer(1L),
-		  pivot = 1L:p, qraux = double(p), work = double(2*p),
+          qr = x, n = n, p = p,
+          y = y, ny = ny,
+          tol = as.double(tol),
+          coefficients = mat.or.vec(p, ny),
+          residuals = y, effects = y, rank = integer(1L),
+          pivot = 1L:p, qraux = double(p), work = double(2*p),
                   PACKAGE="base")
 
     with less allocation.
@@ -58,21 +58,21 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
 
     /* These lose attributes, so do after we have extracted dims */
     if (TYPEOF(x) != REALSXP) {
-	PROTECT(x = coerceVector(x, REALSXP)); 
-	nprotect++;
+    PROTECT(x = coerceVector(x, REALSXP)); 
+    nprotect++;
     }
     if (TYPEOF(y) != REALSXP) {
-	PROTECT(y = coerceVector(y, REALSXP));
-	nprotect++;
+    PROTECT(y = coerceVector(y, REALSXP));
+    nprotect++;
     }
 
     double *rptr = REAL(x);
     for (int i = 0 ; i < LENGTH(x) ; i++)
-	if(!R_FINITE(rptr[i])) error("NA/NaN/Inf in 'x'");
+    if(!R_FINITE(rptr[i])) error("NA/NaN/Inf in 'x'");
     
     rptr = REAL(y);
     for (int i = 0 ; i < LENGTH(y) ; i++)
-	if(!R_FINITE(rptr[i])) error("NA/NaN/Inf in 'y'");
+    if(!R_FINITE(rptr[i])) error("NA/NaN/Inf in 'y'");
 
     PROTECT(ans = allocVector(VECSXP, 9));
     ansnames = allocVector(STRSXP, 9);
@@ -103,13 +103,19 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
    
     work = (double *) R_alloc(2 * p, sizeof(double));
     F77_CALL(dqrls)(REAL(qr), &n, &p, REAL(y), &ny, &rtol,
-		    REAL(coefficients), REAL(residuals), REAL(effects),
-		    &rank, INTEGER(pivot), REAL(qraux), work);
+            REAL(coefficients), REAL(residuals), REAL(effects),
+            &rank, INTEGER(pivot), REAL(qraux), work);
     SET_VECTOR_ELT(ans, 4, ScalarInteger(rank));
     for(int i = 0; i < p; i++)
-	if(ip[i] != i+1) { pivoted = 1; break; }
+    if(ip[i] != i+1) { pivoted = 1; break; }
     SET_VECTOR_ELT(ans, 8, ScalarLogical(pivoted));
     UNPROTECT(nprotect);
     
     return ans;
+}
+
+void R_init_NBPSeq( DllInfo *info )
+{
+  R_registerRoutines(info, NULL, NULL, NULL, NULL);
+  R_useDynamicSymbols(info, TRUE);
 }

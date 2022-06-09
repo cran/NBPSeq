@@ -1,5 +1,5 @@
-f05932cd1f4fb8552364dc17aaf92a03 *DESCRIPTION
-d9473ab70bb878c8df0c34d38441b943 *NAMESPACE
+79190caa0827c4a14bf5f1592e496fe3 *DESCRIPTION
+bb4ca104ff12d2530c3ecc95ffbefcde *NAMESPACE
 3b820c10fefdf222d5c4d68119428327 *R/NBPSeq.package.R
 c5a314e44737872d64b3c9ec9b9479a9 *R/hoa.1d.R
 8dfecfb9df4ca75abcf2ff03fe023ee1 *R/hoa.hd.R
@@ -41,4 +41,4 @@ d1c0d0c6f58d6a9d2677646ad248d1fd *man/plot.nb.dispersion.Rd
 b20960f823037d4d97098da0b0ba3c4a *man/print.nb.test.Rd
 5d39ddd22dd2bd14b3f5b94fe9219f38 *man/print.nbp.Rd
 0afd52208ac30ee966f5b896ed07c455 *man/test.coefficient.Rd
-3c9ca2ad3fbfd27742b73271acd8e2aa *src/lm.c
+74614d8c5e17e23f8517ed831442aded *src/lm.c
